@@ -1,10 +1,9 @@
-import Profile from "../Profile";
-import Gallery from "../Gallery";
-import { cards, user } from "../../utils/constants";
 import { useState } from "react";
-import Popup from "./components/Popup/Popup";
-import NewCard from "./components/NewCard/NewCard";
-import ImagePopup from "./components/ImagePopup/ImagePopup";
+import { cards, user } from "../../utils/constants";
+import Card from "../Card/Card";
+import Popup from "../Popup/Popup";
+import NewCard from "../NewCard/NewCard";
+import ImagePopup from "../ImagePopup/ImagePopup";
 
 export default function Main() {
   const [popup, setPopup] = useState(null);
@@ -35,25 +34,65 @@ export default function Main() {
 
   return (
     <main className="content">
-      <Profile
-        name={user.name}
-        about={user.about}
-        avatar={user.avatar}
-        onAddPlace={() => handleOpenPopup(newCardPopup)}
-      />
+      {/* PROFILE */}
+      <section className="profile">
+        <div className="profile__info">
+          <div className="profile__avatar-container">
+            <img
+              src={user.avatar}
+              alt={user.name}
+              className="profile__avatar"
+            />
+            <button
+              type="button"
+              className="profile__avatar-edit"
+              aria-label="Editar avatar"
+            ></button>
+          </div>
 
-      <Gallery
-        cards={cardList}
-        onDelete={handleDeleteCard}
-        onCardClick={handleOpenPopup}
-      />
+          <div className="profile__details">
+            <div className="profile__title">
+              <h2 className="profile__name">{user.name}</h2>
+              <button
+                className="profile__edit-btn"
+                aria-label="Editar perfil"
+              ></button>
+            </div>
+            <p className="profile__role">{user.about}</p>
+          </div>
+        </div>
 
+        <button
+          className="profile__add-btn"
+          aria-label="Agregar lugar"
+          onClick={() => handleOpenPopup(newCardPopup)}
+        ></button>
+      </section>
+
+      {/* GALLERY */}
+      <section className="gallery">
+        <ul className="gallery__list">
+          {cardList.map((card) => (
+            <Card
+              key={card.id}
+              id={card.id}
+              title={card.title}
+              image={card.image}
+              onDelete={handleDeleteCard}
+              onCardClick={handleOpenPopup}
+            />
+          ))}
+        </ul>
+      </section>
+
+      {/* POPUP NUEVA TARJETA */}
       {popup && popup.children && (
         <Popup title={popup.title} onClose={() => setPopup(null)}>
           {popup.children}
         </Popup>
       )}
 
+      {/* POPUP IMAGEN */}
       {popup && popup.image && (
         <ImagePopup card={popup} onClose={() => setPopup(null)} />
       )}
