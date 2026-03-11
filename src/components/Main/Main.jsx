@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { cards, user } from "../../utils/constants";
 import Card from "../Card/Card";
-import Popup from "../Popup/Popup";
-import NewCard from "../NewCard/NewCard";
+import Popup from "./Popup/Popup";
+import NewCard from "./form/NewCard/NewCard";
 import ImagePopup from "../ImagePopup/ImagePopup";
+import EditProfile from "./form/EditProfile/EditProfile";
+import EditAvatar from "./form/EditAvatar/EditAvatar";
 
 export default function Main() {
   const [popup, setPopup] = useState(null);
@@ -11,6 +13,10 @@ export default function Main() {
 
   function handleOpenPopup(popupData) {
     setPopup(popupData);
+  }
+
+  function handleClosePopup() {
+    setPopup(null);
   }
 
   function handleAddCard(newCard) {
@@ -32,6 +38,16 @@ export default function Main() {
     children: <NewCard onAddCard={handleAddCard} />,
   };
 
+  const editProfilePopup = {
+    title: "Editar perfil",
+    children: <EditProfile />,
+  };
+
+  const editAvatarPopup = {
+    title: "Editar avatar",
+    children: <EditAvatar />,
+  };
+
   return (
     <main className="content">
       {/* PROFILE */}
@@ -47,6 +63,7 @@ export default function Main() {
               type="button"
               className="profile__avatar-edit"
               aria-label="Editar avatar"
+              onClick={() => handleOpenPopup(editAvatarPopup)}
             ></button>
           </div>
 
@@ -56,6 +73,7 @@ export default function Main() {
               <button
                 className="profile__edit-btn"
                 aria-label="Editar perfil"
+                onClick={() => handleOpenPopup(editProfilePopup)}
               ></button>
             </div>
             <p className="profile__role">{user.about}</p>
@@ -85,16 +103,16 @@ export default function Main() {
         </ul>
       </section>
 
-      {/* POPUP NUEVA TARJETA */}
+      {/* POPUP FORMULARIOS */}
       {popup && popup.children && (
-        <Popup title={popup.title} onClose={() => setPopup(null)}>
+        <Popup title={popup.title} onClose={handleClosePopup}>
           {popup.children}
         </Popup>
       )}
 
       {/* POPUP IMAGEN */}
       {popup && popup.image && (
-        <ImagePopup card={popup} onClose={() => setPopup(null)} />
+        <ImagePopup card={popup} onClose={handleClosePopup} />
       )}
     </main>
   );

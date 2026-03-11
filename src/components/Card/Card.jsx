@@ -16,34 +16,32 @@ function Card({ id, title, image, onDelete, onCardClick }) {
   }
 
   return (
-    <li className="gallery__item">
-      <button
-        className="gallery__delete-button"
-        onClick={handleDelete}
-        type="button"
-      >
-        🗑️
-      </button>
-
+    <li className="card">
       <img
         src={image}
         alt={title}
-        className="gallery__image"
+        className="card__image"
         onClick={handleImageClick}
       />
 
-      <div className="gallery__info">
-        <h3 className="gallery__title">{title}</h3>
+      <button
+        aria-label="Delete card"
+        className="card__delete-button"
+        type="button"
+        onClick={handleDelete}
+      />
+
+      <div className="card__description">
+        <h2 className="card__title">{title}</h2>
 
         <button
-          className={`gallery__like-button ${
-            liked ? "gallery__like-button_active" : ""
+          aria-label="Like card"
+          type="button"
+          className={`card__like-button ${
+            liked ? "card__like-button_active" : ""
           }`}
           onClick={handleLike}
-          type="button"
-        >
-          ❤️
-        </button>
+        />
       </div>
     </li>
   );

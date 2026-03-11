@@ -1,10 +1,10 @@
-import galapagos from "../assets/islagalapagos.jpg";
-import clipperton from "../assets/isla_clipperton.jpg";
-import california from "../assets/golfo de california.jpg";
-import arrecife from "../assets/arrecifes de coral.jpg";
-import antartida from "../assets/antartida.jpg";
-import amazonia from "../assets/Amazonia.jpg";
-import avatar from "../assets/Avatar.png";
+import galapagos from "../images/islagalapagos.jpg";
+import clipperton from "../images/isla_clipperton.jpg";
+import california from "../images/golfo de california.jpg";
+import arrecife from "../images/arrecifes de coral.jpg";
+import antartida from "../images/antartida.jpg";
+import amazonia from "../images/Amazonia.jpg";
+import avatar from "../images/Avatar.png";
 
 export const cards = [
   {

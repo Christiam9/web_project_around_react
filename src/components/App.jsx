@@ -1,5 +1,6 @@
-import Header from "./components/Header";
+import Header from "./Header/Header";
 import Main from "./Main/Main";
+import Footer from "./Footer/Footer";
 
 function App() {
   return (
@@ -8,9 +9,7 @@ function App() {
 
       <Main />
 
-      <footer className="footer">
-        <p className="footer__text">© 2025 Around The U.S.-Christiam Ruiz</p>
-      </footer>
+      <Footer />
     </div>
   );
 }
