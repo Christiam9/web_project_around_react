@@ -1,8 +1,14 @@
 export default function ImagePopup({ card, onClose }) {
   if (!card) return null;
 
+  function handleOverlayClick(e) {
+    if (e.target.classList.contains("popup")) {
+      onClose();
+    }
+  }
+
   return (
-    <div className="popup popup_type_image">
+    <div className="popup popup_type_image" onClick={handleOverlayClick}>
       <div className="popup__content popup__content_content_image">
         <button
           className="popup__close"

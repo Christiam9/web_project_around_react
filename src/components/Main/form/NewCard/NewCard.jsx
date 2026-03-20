@@ -17,7 +17,7 @@ export default function NewCard() {
           required
           type="text"
         />
-        <span className="popup__error" id="card-name-error"></span>
+        <span className="text-error" id="card-name-error"></span>
       </label>
 
       <label className="popup__field">
@@ -29,10 +29,10 @@ export default function NewCard() {
           required
           type="url"
         />
-        <span className="popup__error" id="card-link-error"></span>
+        <span className="text-error" id="card-link-error"></span>
       </label>
 
-      <button className="button popup__button" type="submit">
+      <button className="popup__button-save" type="submit">
         Guardar
       </button>
     </form>

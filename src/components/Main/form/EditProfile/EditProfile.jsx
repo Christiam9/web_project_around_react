@@ -6,7 +6,7 @@ export default function EditProfile() {
       id="edit-profile-form"
       noValidate
     >
-      <label className="popup__field">
+      <fieldset className="popup__field">
         <input
           className="popup__input popup__input_type_name"
           id="profile-name"
@@ -17,10 +17,10 @@ export default function EditProfile() {
           required
           type="text"
         />
-        <span className="popup__error" id="profile-name-error"></span>
-      </label>
+        <span className="text-error" id="profile-name-error"></span>
+      </fieldset>
 
-      <label className="popup__field">
+      <fieldset className="popup__field">
         <input
           className="popup__input popup__input_type_description"
           id="profile-description"
@@ -31,10 +31,13 @@ export default function EditProfile() {
           required
           type="text"
         />
-        <span className="popup__error" id="profile-description-error"></span>
-      </label>
+        <span className="text-error" id="profile-description-error"></span>
+      </fieldset>
 
-      <button className="button popup__button" type="submit">
+      <button
+        className="popup__button-save popup__button_disabled"
+        type="submit"
+      >
         Guardar
       </button>
     </form>

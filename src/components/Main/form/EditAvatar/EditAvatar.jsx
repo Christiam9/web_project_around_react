@@ -6,19 +6,24 @@ export default function EditAvatar() {
       id="edit-avatar-form"
       noValidate
     >
-      <label className="popup__field">
+      <fieldset className="popup__field">
         <input
           className="popup__input popup__input_type_avatar"
           id="profile-avatar"
+          maxLength="200"
+          minLength="1"
           name="avatar"
           placeholder="Avatar link"
           required
           type="url"
         />
-        <span className="popup__error" id="profile-avatar-error"></span>
-      </label>
+        <span className="text-error" id="profile-avatar-error"></span>
+      </fieldset>
 
-      <button className="button popup__button" type="submit">
+      <button
+        className="popup__button-save popup__button_disabled"
+        type="submit"
+      >
         Guardar
       </button>
     </form>
