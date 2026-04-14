@@ -1,10 +1,22 @@
-export default function NewCard() {
+export default function NewCard({ onAddCard }) {
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const name = e.target["card-name"].value;
+    const link = e.target["link"].value;
+
+    console.log("📤 DATOS DEL FORM:", { name, link });
+
+    onAddCard({ name, link });
+  }
+
   return (
     <form
       className="popup__form"
       name="card-form"
       id="new-card-form"
       noValidate
+      onSubmit={handleSubmit}
     >
       <label className="popup__field">
         <input

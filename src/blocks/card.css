@@ -45,11 +45,16 @@
   width: 21px;
   height: 19px;
   border: none;
-  background: transparent url("../images/button/Vector.png") center no-repeat;
+
+  background-color: transparent;
+  background-image: url("../images/button/Vector.png");
+  background-position: center;
+  background-repeat: no-repeat;
+
   cursor: pointer;
 }
 
 .card__like-button_active {
-  background-image: url("../images//button/Vector.png");
-  opacity: 0.5;
+  filter: brightness(0) saturate(100%) invert(18%) sepia(96%) saturate(7473%)
+    hue-rotate(356deg) brightness(97%) contrast(119%);
 }
