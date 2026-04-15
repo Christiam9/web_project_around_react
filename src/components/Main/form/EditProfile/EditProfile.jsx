@@ -1,28 +1,18 @@
-import { useState, useEffect } from "react";
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import CurrentUserContext from "../../../../contexts/CurrentUserContext";
 
-export default function EditProfile({ onUpdateUser, onClose }) {
+export default function EditProfile({ onUpdateUser }) {
   const [nameError, setNameError] = useState("");
   const [aboutError, setAboutError] = useState("");
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
   const [isValid, setIsValid] = useState(false);
+
   const currentUser = useContext(CurrentUserContext);
 
   function handleSubmit(e) {
     e.preventDefault();
-
     onUpdateUser({ name, about });
-    onClose();
-  }
-
-  function handleNameChange(e) {
-    setName(e.target.value);
-  }
-
-  function handleAboutChange(e) {
-    setAbout(e.target.value);
   }
 
   useEffect(() => {

@@ -8,20 +8,15 @@ import EditProfile from "./form/EditProfile/EditProfile";
 import EditAvatar from "./form/EditAvatar/EditAvatar";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function Main({ onUpdateUser }) {
+export default function Main({
+  cards,
+  setCards,
+  onUpdateUser,
+  onUpdateAvatar,
+}) {
   const currentUser = useContext(CurrentUserContext);
 
   const [popup, setPopup] = useState(null);
-  const [cardList, setCardList] = useState([]);
-
-  useEffect(() => {
-    api
-      .getInitialCards()
-      .then((data) => {
-        setCardList(data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
 
   function handleOpenPopup(type) {
     setPopup(type);
@@ -35,33 +30,42 @@ export default function Main({ onUpdateUser }) {
     api
       .addCard(data)
       .then((newCard) => {
-        setCardList((prevCards) => [newCard, ...prevCards]);
+        setCards((prevCards) => [newCard, ...prevCards]);
         setPopup(null);
       })
       .catch((err) => console.log(err));
+  }
+  function handleUpdateUserAndClose(data) {
+    onUpdateUser(data);
+    setPopup(null);
+  }
+
+  function handleUpdateAvatarAndClose(data) {
+    onUpdateAvatar(data);
+    setPopup(null);
   }
 
   function handleDeleteCard(id) {
     api
       .deleteCard(id)
       .then(() => {
-        setCardList((prevCards) => prevCards.filter((card) => card._id !== id));
+        setCards((prevCards) => prevCards.filter((card) => card._id !== id));
       })
       .catch((err) => console.log(err));
   }
 
   function handleCardLike(card) {
-    const isLiked = card.isLiked;
+    const isLiked = card.likes?.some((user) => user._id === currentUser._id);
 
     const request = isLiked ? api.unlikeCard(card._id) : api.likeCard(card._id);
 
     request
-      .then((newCard) => {
-        setCardList((cards) =>
-          cards.map((c) => (c._id === card._id ? newCard : c)),
+      .then((updatedCard) => {
+        setCards((cards) =>
+          cards.map((c) => (c._id === card._id ? updatedCard : c)),
         );
       })
-      .catch(console.error);
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -103,7 +107,7 @@ export default function Main({ onUpdateUser }) {
       {/* GALLERY */}
       <section className="gallery">
         <ul className="gallery__list">
-          {cardList.map((card) => (
+          {cards.map((card) => (
             <Card
               key={card._id}
               card={card}
@@ -121,16 +125,15 @@ export default function Main({ onUpdateUser }) {
           <NewCard onAddCard={handleAddCard} />
         </Popup>
       )}
-
       {popup === "editProfile" && (
         <Popup title="Editar perfil" onClose={handleClosePopup}>
-          <EditProfile onUpdateUser={onUpdateUser} onClose={handleClosePopup} />
+          <EditProfile onUpdateUser={handleUpdateUserAndClose} />
         </Popup>
       )}
 
       {popup === "editAvatar" && (
         <Popup title="Editar avatar" onClose={handleClosePopup}>
-          <EditAvatar />
+          <EditAvatar onUpdateAvatar={handleUpdateAvatarAndClose} />
         </Popup>
       )}
 

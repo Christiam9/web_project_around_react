@@ -7,6 +7,7 @@ import CurrentUserContext from "../contexts/CurrentUserContext";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     api
@@ -27,11 +28,34 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  function handleUpdateAvatar(data) {
+    api
+      .updateAvatar(data)
+      .then((updatedUser) => {
+        setCurrentUser(updatedUser);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    api
+      .getInitialCards()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
-        <Main onUpdateUser={handleUpdateUser} />
+        <Main
+          cards={cards}
+          setCards={setCards}
+          onUpdateUser={handleUpdateUser}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
         <Footer />
       </div>
     </CurrentUserContext.Provider>

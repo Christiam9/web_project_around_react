@@ -3,12 +3,8 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Card({ card, onCardLike, onCardDelete, onCardClick }) {
   const currentUser = useContext(CurrentUserContext);
+  const isLiked = card.likes?.some((user) => user._id === currentUser._id);
 
-  // 👉 verificar si el usuario actual dio like
-  const isLiked = card.isLiked;
-  console.log("IS LIKED EN CARD:", isLiked);
-
-  // 👉 clase dinámica
   const likeButtonClassName = `card__like-button ${
     isLiked ? "card__like-button_active" : ""
   }`;
@@ -39,10 +35,10 @@ function Card({ card, onCardLike, onCardDelete, onCardClick }) {
         onClick={handleImageClick}
       />
 
-      <button className="card__delete-button" onClick={handleDeleteClick} />
-
       <div className="card__description">
         <h2 className="card__title">{card.name}</h2>
+
+        <button className={likeButtonClassName} onClick={handleLikeClick} />
 
         {isOwn && (
           <button className="card__delete-button" onClick={handleDeleteClick} />
