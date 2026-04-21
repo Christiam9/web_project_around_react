@@ -54,18 +54,16 @@ export default function Main({
       .catch((err) => console.log(err));
   }
 
-  function handleCardLike(card) {
-    const isLiked = card.likes?.some((user) => user._id === currentUser._id);
-
-    const request = isLiked ? api.unlikeCard(card._id) : api.likeCard(card._id);
-
-    request
-      .then((updatedCard) => {
-        setCards((cards) =>
-          cards.map((c) => (c._id === card._id ? updatedCard : c)),
-        );
-      })
-      .catch((err) => console.log(err));
+  async function handleCardLike(card) {
+    const isLiked = card.isLiked;
+    try {
+      const newCard = isLiked
+        ? await api.unlikeCard(card._id)
+        : await api.likeCard(card._id);
+      setCards((cards) => cards.map((c) => (c._id === card._id ? newCard : c)));
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
